@@ -1,1 +1,13 @@
-I see you found where I keep my sources... Here's the flag safctf{f0d0-7af4-79d4-4842-b3f5-29c5-8871-f592}
+# Introduction
+
+A simple script to encrypt and decrypt using rail fence cipher
+
+# Usage
+
+* Encrypt
+
+```python main.py encrypt plaintext 5```
+
+* Decrypt
+
+```python main.py decrypt ptlxaeitn 5```

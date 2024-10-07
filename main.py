@@ -1,5 +1,10 @@
 # Obtained from: https://github.com/LeoMartinezTAMUK/K-Rail_Fence_Cipher_Encryption-Decryption
 import argparse
+import os
+
+# Function to read an environment variable
+def read_env_variable(var_name):
+    return os.getenv(var_name)
 
 # Method for performing K-Rail Fence Encryption on given plaintext
 def encryptRailFence(plaintext, key):
@@ -102,9 +107,28 @@ def decryptRailFence(ciphertext, key):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('type', choices=['encrypt', 'decrypt'], help='Choice of action. encrypt / decrypt')
-    parser.add_argument('text', help='Plaintext to encrypt / cipher text to decrypt')
-    parser.add_argument('key', type=int, help='Key used to encrypt / decrypt')
+
+    choice = read_env_variable('TYPE')
+    text = read_env_variable('TEXT')
+    try:
+        key = int(read_env_variable('KEY'))
+    except TypeError:
+        key = None
+
+    if choice:
+        parser.add_argument('--type', choices=['encrypt', 'decrypt'], help='Choice of action. encrypt / decrypt', required=False, default=choice)
+    else:
+        parser.add_argument('--type', required=True, choices=['encrypt', 'decrypt'], help='Choice of action. encrypt / decrypt')
+
+    if text:
+        parser.add_argument('--text', help='Plaintext to encrypt / cipher text to decrypt', required=False, default=text)
+    else:
+        parser.add_argument('--text', required=True, help='Plaintext to encrypt / cipher text to decrypt')
+
+    if key:
+        parser.add_argument('--key', type=int, help='Key used to encrypt / decrypt', required=False, default=int(key))
+    else:
+        parser.add_argument('--key', type=int, required=True, help='Key used to encrypt / decrypt')
 
     args = parser.parse_args()
     choice = args.type
@@ -112,9 +136,11 @@ def main():
     key = args.key
 
     if choice == 'encrypt':
+        print(f'Encrypting {text} with key {key}\n')
         cipher = encryptRailFence(text, key)
         print(cipher)
     else:
+        print(f'Decrypting {text} with key {key}\n')
         plaintext = decryptRailFence(text, key)
         print(plaintext)
 

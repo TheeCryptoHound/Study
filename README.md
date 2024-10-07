@@ -6,8 +6,8 @@ A simple script to encrypt and decrypt using rail fence cipher
 
 * Encrypt
 
-```python main.py encrypt plaintext 5```
+```python3 main.py --type encrypt --text plaintext --key 5```
 
 * Decrypt
 
-```python main.py decrypt ptlxaeitn 5```
+```python3 main.py --type decrypt --text ptlxaeitn --key 5```
